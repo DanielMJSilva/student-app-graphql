@@ -1,0 +1,31 @@
+var GraphQLSchema = require("graphql").GraphQLSchema;
+var GraphQLObjectType = require("graphql").GraphQLObjectType;
+
+var { studentQuery, studentMutation } = require("./studentSchemas");
+var { courseQuery, courseMutation } = require("./courseSchemas");
+var { loginQuery, loginMutation } = require("./loginSchemas");
+
+const queryType = new GraphQLObjectType({
+  name: "Query",
+  fields: function () {
+    return {
+      ...studentQuery,
+      ...courseQuery,
+      ...loginQuery,
+    };
+  },
+});
+
+const mutation = new GraphQLObjectType({
+  name: "Mutation",
+  fields: function () {
+    return {
+      ...studentMutation,
+      ...courseMutation,
+      ...loginMutation,
+    };
+  },
+});
+
+//
+module.exports = new GraphQLSchema({ query: queryType, mutation: mutation });
